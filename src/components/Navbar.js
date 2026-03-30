@@ -12,12 +12,12 @@ export default function Navbar() {
         </div>
       </div>
       <div className="flex gap-0 animate-fade-in-up" style={{ animationDelay: '0.2s', animationFillMode: 'both' }}>
-        <Link href="#home" className="nav-link active">Home</Link>
-        <Link href="#about" className="nav-link">About Us</Link>
-        <Link href="#products" className="nav-link">Products</Link>
-        <Link href="#community" className="nav-link">Eatrobust Community</Link>
-        <Link href="#tracker" className="nav-link">Assessment Tracker</Link>
-        <Link href="#join" className="nav-link cta">Join Now →</Link>
+        <Link href="/" className="nav-link active">Home</Link>
+        <Link href="/about" className="nav-link">About Us</Link>
+        <Link href="/products" className="nav-link">Products</Link>
+        <Link href="/community" className="nav-link">Community</Link>
+        <Link href="/contact" className="nav-link">Contact</Link>
+        <Link href="/contact" className="nav-link cta">Join Now →</Link>
       </div>
     </nav>
   );
