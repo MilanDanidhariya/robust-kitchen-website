@@ -160,7 +160,7 @@ export default function Contact() {
                       </div>
                       <div>
                         <h3 className="text-lg font-semibold text-dk mb-1">Phone</h3>
-                        <p className="text-gray-600">+91 98765 43210</p>
+                        <p className="text-gray-600">+91 6351096511</p>
                         <p className="text-gray-600">Mon-Fri: 9AM - 6PM IST</p>
                       </div>
                     </div>
@@ -173,8 +173,8 @@ export default function Contact() {
                       </div>
                       <div>
                         <h3 className="text-lg font-semibold text-dk mb-1">Email</h3>
-                        <p className="text-gray-600">hello@robustkitchen.com</p>
-                        <p className="text-gray-600">support@robustkitchen.com</p>
+                        <p className="text-gray-600">eatrobust@gmail.com</p>
+                        <p className="text-gray-600">Available 24/7</p>
                       </div>
                     </div>
 
@@ -187,9 +187,9 @@ export default function Contact() {
                       </div>
                       <div>
                         <h3 className="text-lg font-semibold text-dk mb-1">Address</h3>
-                        <p className="text-gray-600">123 Health Street</p>
-                        <p className="text-gray-600">Nutrition District, Mumbai 400001</p>
-                        <p className="text-gray-600">Maharashtra, India</p>
+                        <p className="text-gray-600">3rd Floor, Shop No. 370, Emerald One Building</p>
+                        <p className="text-gray-600">371 - 378 - 379, Jetalpur Rd, Anand Nagar, Haripura</p>
+                        <p className="text-gray-600">Vadodara, Gujarat 390020, India</p>
                       </div>
                     </div>
 

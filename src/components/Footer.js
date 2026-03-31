@@ -18,7 +18,7 @@ export default function Footer() {
               An Eatrobust Brand. Therapeutic meals designed by in-house dieticians, prepared by trained chefs, and served with one mission — to unleash the best in every person through nutrition. Now serving at Kadicare.
             </p>
             <p className="text-white/40 text-xs font-jetbrains-mono animate-fade-in-up" style={{ animationDelay: '0.3s', animationFillMode: 'both' }}>
-              Gujarat, India · [Insert full address]
+              3rd Floor, Shop No. 370, Emerald One Building, Jetalpur Rd, Vadodara, Gujarat 390020
             </p>
           </div>
 

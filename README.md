@@ -194,7 +194,8 @@ This project is private and proprietary to Robust Kitchen.
 ## 📞 Support
 
 For technical support or questions:
-- Email: [your-email]
+- Email: eatrobust@gmail.com
+- Phone: +91 6351096511
 - Project maintained by: Robust Kitchen Development Team
 
 ---
