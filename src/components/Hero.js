@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import Image from 'next/image';
 
 export default function Hero() {
   const [calculatorData, setCalculatorData] = useState({
@@ -135,15 +134,14 @@ export default function Hero() {
           </div>
           <div className="animate-slide-in-right space-y-6">
             <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-all hover:scale-105 transform">
-              <Image
-                src="/loader-gif.gif"
-                alt="Robust Kitchen - Therapeutic Meal Spread"
-                width={1400}
-                height={900}
-                priority
-                className="w-full h-64 object-cover rounded-xl border-2 border-lime/20"
-                unoptimized
-              />
+              <div className="bg-gradient-to-br from-light to-border/70 border-2 border-dashed border-lime rounded-xl flex flex-col items-center justify-center text-mid font-jetbrains-mono text-center p-6 h-64">
+                <div className="text-3xl mb-2">📸</div>
+                <div className="font-bold text-sm text-green">HERO IMAGE — Kadicare Kitchen / Meal Spread</div>
+                <div className="text-xs text-muted leading-relaxed mt-2">
+                  Overhead shot of fresh therapeutic meal spread at Kadicare<br />
+                  1400×900px · WebP · warm natural lighting
+                </div>
+              </div>
             </div>
             {/* Meal Calculator */}
             <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-6 border border-white/20 shadow-2xl hover:shadow-3xl transition-all">
