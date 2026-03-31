@@ -68,7 +68,7 @@ export default function Contact() {
                           required
                           value={formData.name}
                           onChange={handleChange}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-lime focus:border-transparent"
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg text-dk placeholder-gray-500 focus:ring-2 focus:ring-lime focus:border-transparent"
                           placeholder="Your full name"
                         />
                       </div>
@@ -83,7 +83,7 @@ export default function Contact() {
                           required
                           value={formData.email}
                           onChange={handleChange}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-lime focus:border-transparent"
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg text-dk placeholder-gray-500 focus:ring-2 focus:ring-lime focus:border-transparent"
                           placeholder="your@email.com"
                         />
                       </div>
@@ -99,7 +99,7 @@ export default function Contact() {
                           name="phone"
                           value={formData.phone}
                           onChange={handleChange}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-lime focus:border-transparent"
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg text-dk placeholder-gray-500 focus:ring-2 focus:ring-lime focus:border-transparent"
                           placeholder="+91 XXXXX XXXXX"
                         />
                       </div>
@@ -113,7 +113,7 @@ export default function Contact() {
                           required
                           value={formData.subject}
                           onChange={handleChange}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-lime focus:border-transparent"
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg text-dk focus:ring-2 focus:ring-lime focus:border-transparent"
                         >
                           <option value="">Select a subject</option>
                           <option value="general">General Inquiry</option>
@@ -135,7 +135,7 @@ export default function Contact() {
                         rows={6}
                         value={formData.message}
                         onChange={handleChange}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-lime focus:border-transparent"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg text-dk placeholder-gray-500 focus:ring-2 focus:ring-lime focus:border-transparent"
                         placeholder="Tell us how we can help you..."
                       />
                     </div>

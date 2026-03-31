@@ -146,7 +146,6 @@ body {
 
 .nav-link:hover {
   color: var(--lime);
-  transform: translateY(-2px);
 }
 
 .nav-link.active {
@@ -156,20 +155,21 @@ body {
 .nav-link.cta {
   background: linear-gradient(135deg, var(--lime), #5aab3d);
   color: var(--dk);
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 700;
-  padding: 10px 20px;
-  border-radius: 25px;
+  padding: 12px 24px;
+  border-radius: 28px;
   letter-spacing: 0.5px;
   white-space: nowrap;
   border-bottom: none;
-  margin-left: 8px;
+  margin-left: 12px;
   box-shadow: 0 4px 15px rgba(106, 191, 69, 0.3);
   transition: all 0.3s ease;
 }
 
 .nav-link.cta:hover {
   background: linear-gradient(135deg, #5aab3d, var(--lime));
-  transform: translateY(-2px) scale(1.05);
+  /* transform: translateY(-2px) scale(1.05); */
+  transform: scale(1.05);
   box-shadow: 0 8px 25px rgba(106, 191, 69, 0.4);
 }
