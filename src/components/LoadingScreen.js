@@ -14,8 +14,8 @@ export default function LoadingScreen({ onComplete }) {
         if (prev >= 100) {
           clearInterval(interval);
           setTimeout(() => {
-            setIsVisible(false);
-            onComplete();
+            // setIsVisible(false);
+            // onComplete();
           }, 500);
           return 100;
         }
@@ -38,7 +38,7 @@ export default function LoadingScreen({ onComplete }) {
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-40 h-40 bg-lime/5 rounded-full animate-bounce" style={{ animationDelay: '0.5s' }}></div>
         </div>
 
-        <div className="animate-bounce mb-8">
+        <div className="animate-bounce mb-8 flex justify-center items-center">
           <Logo size="xl" animated={true} />
         </div>
 

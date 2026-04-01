@@ -17,6 +17,7 @@
   --border: #ccddc4;
   --light: #e4f0db;
   --white: #ffffff;
+  --customSalmon: #ed7e6d;
 }
 
 @theme inline {
@@ -35,6 +36,7 @@
   --color-border: var(--border);
   --color-light: var(--light);
   --color-white: var(--white);
+  --color-customSalmon: var(--customSalmon);
   --font-cormorant-garamond: var(--font-cormorant-garamond);
   --font-outfit: var(--font-outfit);
   --font-jetbrains-mono: var(--font-jetbrains-mono);

@@ -30,7 +30,8 @@ export default function Navbar() {
       <Link href="/" className="flex items-center gap-4 animate-fade-in-up cursor-pointer hover:opacity-80 transition-opacity">
         <Logo size="small" />
         <div className="font-cormorant-garamond font-bold text-xl text-white">
-          Robust <span className="text-lime">Kitchen</span>
+          {/* Robust <span className="text-lime">Kitchen</span> */}
+          Robust <span className="text-customSalmon">Kitchen</span>
           <sup className="text-xs text-gold ml-1">™</sup>
         </div>
       </Link>

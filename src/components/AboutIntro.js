@@ -25,7 +25,7 @@ export default function AboutIntro() {
               Our in-house team of experienced dieticians and trained chefs work under one roof to create meals that address real health conditions — diabetes, PCOD, gut disorders, thyroid — with food that is preservative-free, fresh, and deeply rooted in Indian culinary tradition.
             </p>
             <p className="text-muted leading-relaxed mb-8 animate-fade-in-up" style={{ animationDelay: '0.5s', animationFillMode: 'both' }}>
-              Currently serving at <strong className="text-green">Kadicare</strong>, and expanding across Gujarat through our B2B enterprise kitchen model, B2C app, and clean-label product range.
+              Currently serving at <strong className="text-green">Kadji care</strong>, and expanding across Gujarat through our B2B enterprise kitchen model, B2C app, and clean-label product range.
             </p>
             <div className="flex flex-wrap gap-3 animate-fade-in-up" style={{ animationDelay: '0.6s', animationFillMode: 'both' }}>
               <a href="#about" className="bg-lime text-dk font-bold text-sm px-6 py-3 rounded-lg hover:bg-lime/90 hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">

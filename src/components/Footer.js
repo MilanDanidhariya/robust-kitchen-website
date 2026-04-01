@@ -15,7 +15,7 @@ export default function Footer() {
               <sup className="text-xs text-gold ml-1">™</sup>
             </div>
             <p className="text-white/70 text-sm leading-relaxed mb-4 animate-fade-in-up" style={{ animationDelay: '0.2s', animationFillMode: 'both' }}>
-              An Eatrobust Brand. Therapeutic meals designed by in-house dieticians, prepared by trained chefs, and served with one mission — to unleash the best in every person through nutrition. Now serving at Kadicare.
+              An Eatrobust Brand. Therapeutic meals designed by in-house dieticians, prepared by trained chefs, and served with one mission — to unleash the best in every person through nutrition. Now serving at Kadji care.
             </p>
             <p className="text-white/40 text-xs font-jetbrains-mono animate-fade-in-up" style={{ animationDelay: '0.3s', animationFillMode: 'both' }}>
               3rd Floor, Shop No. 370, Emerald One Building, Jetalpur Rd, Vadodara, Gujarat 390020

@@ -83,7 +83,8 @@ export default function Hero() {
             <h1 className="font-cormorant-garamond text-5xl lg:text-7xl font-bold leading-tight mb-8 text-white">
               <span className="text-lime animate-pulse">Unleash</span> the Best<br />
               Within You Through<br />
-              <span className="text-gold animate-pulse">Nutrition</span>
+              {/* <span className="text-gold animate-pulse">Nutrition</span> */}
+              <span className="text-customSalmon animate-pulse">Nutrition</span>
             </h1>
             <p className="text-white/80 text-lg leading-relaxed mb-8 max-w-lg">
               Robust Kitchen is India's most personalised therapeutic meal brand — powered by in-house dieticians, run by trained chefs, and built on one promise: food that genuinely heals.
@@ -99,7 +100,7 @@ export default function Hero() {
                 Clean Label
               </span>
               <span className="bg-white/10 backdrop-blur-sm border border-white/20 text-white/90 text-sm px-4 py-2 rounded-full font-jetbrains-mono hover:bg-white/20 transition-all hover:scale-105 transform cursor-pointer">
-                Now at Kadicare
+                Now at Kadji care
               </span>
               <span className="bg-white/10 backdrop-blur-sm border border-white/20 text-white/90 text-sm px-4 py-2 rounded-full font-jetbrains-mono hover:bg-white/20 transition-all hover:scale-105 transform cursor-pointer">
                 Diabetes · PCOD · Gut Health
@@ -109,7 +110,13 @@ export default function Hero() {
               <a href="#join" className="bg-lime text-dk font-bold text-sm px-8 py-4 rounded-lg transition-all hover:bg-lime/90 hover:scale-105 hover:shadow-lg transform animate-pulse shadow-lime/50">
                 Start My Meal Plan
               </a>
-              <a href="#tracker" className="text-white/90 border-2 border-white/30 text-sm px-8 py-4 rounded-lg transition-all hover:bg-white/10 hover:border-white/50 hover:scale-105 transform">
+              {/* <a href="#tracker" className="text-white/90 border-2 border-white/30 text-sm px-8 py-4 rounded-lg transition-all hover:bg-white/10 hover:border-white/50 hover:scale-105 transform">
+                Free Health Assessment
+              </a> */}
+              <a
+                href="#tracker"
+                className="text-customSalmon/90 border-2 border-customSalmon/30 text-sm px-8 py-4 rounded-lg transition-all hover:bg-customSalmon/10 hover:border-customSalmon/50 hover:text-customSalmon hover:scale-105 transform"
+              >
                 Free Health Assessment
               </a>
             </div>
@@ -136,16 +143,16 @@ export default function Hero() {
             <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-all hover:scale-105 transform">
               <div className="bg-gradient-to-br from-light to-border/70 border-2 border-dashed border-lime rounded-xl flex flex-col items-center justify-center text-mid font-jetbrains-mono text-center p-6 h-64">
                 <div className="text-3xl mb-2">📸</div>
-                <div className="font-bold text-sm text-green">HERO IMAGE — Kadicare Kitchen / Meal Spread</div>
+                <div className="font-bold text-sm text-green">HERO IMAGE — Kadji care Kitchen / Meal Spread</div>
                 <div className="text-xs text-muted leading-relaxed mt-2">
-                  Overhead shot of fresh therapeutic meal spread at Kadicare<br />
+                  Overhead shot of fresh therapeutic meal spread at Kadji care<br />
                   1400×900px · WebP · warm natural lighting
                 </div>
               </div>
             </div>
             {/* Meal Calculator */}
-            <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-6 border border-white/20 shadow-2xl hover:shadow-3xl transition-all">
-              <div className="font-bold text-lg text-green mb-6">🥗 Live Meal Calorie Calculator — Kadicare</div>
+            <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-6 border border-white/20 shadow-2xl hover:shadow-3xl transition-all hidden">
+              <div className="font-bold text-lg text-green mb-6">🥗 Live Meal Calorie Calculator — Kadji care</div>
               <div className="grid grid-cols-2 gap-4 mb-6">
                 <div>
                   <label className="block text-sm font-bold text-mid mb-2 uppercase tracking-wide">Health Goal</label>

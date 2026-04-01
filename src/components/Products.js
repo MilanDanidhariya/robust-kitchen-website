@@ -43,7 +43,8 @@ export default function Products() {
                 <span className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">Diabetic Friendly</span>
                 <span className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">Gut Friendly</span>
               </div>
-              <button className="bg-lime text-dk font-bold text-sm px-4 py-2 rounded w-full hover:bg-lime/90 hover:scale-105 transition-all duration-300 shadow-lg">
+              {/* <button className="bg-lime text-dk font-bold text-sm px-4 py-2 rounded w-full hover:bg-lime/90 hover:scale-105 transition-all duration-300 shadow-lg"> */}
+              <button className="bg-customSalmon text-white font-bold text-sm px-4 py-2 rounded w-full hover:bg-customSalmon/90 hover:scale-105 transition-all duration-300 shadow-lg">
                 Order Now
               </button>
             </div>
@@ -68,7 +69,7 @@ export default function Products() {
                 <span className="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full">PCOD Support</span>
                 <span className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">Zero Preservatives</span>
               </div>
-              <button className="bg-lime text-dk font-bold text-sm px-4 py-2 rounded w-full hover:bg-lime/90 hover:scale-105 transition-all duration-300 shadow-lg">
+              <button className="bg-customSalmon text-white font-bold text-sm px-4 py-2 rounded w-full hover:bg-customSalmon/90 hover:scale-105 transition-all duration-300 shadow-lg">
                 Order Now
               </button>
             </div>
@@ -93,7 +94,7 @@ export default function Products() {
                 <span className="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full">Sustained Energy</span>
                 <span className="bg-red-100 text-red-800 text-xs px-2 py-1 rounded-full">Diabetic Safe</span>
               </div>
-              <button className="bg-lime text-dk font-bold text-sm px-4 py-2 rounded w-full hover:bg-lime/90 hover:scale-105 transition-all duration-300 shadow-lg">
+              <button className="bg-customSalmon text-white font-bold text-sm px-4 py-2 rounded w-full hover:bg-customSalmon/90 hover:scale-105 transition-all duration-300 shadow-lg">
                 Order Now
               </button>
             </div>
@@ -118,7 +119,7 @@ export default function Products() {
                 <span className="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full">No Added Sugar</span>
                 <span className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">PCOD Friendly</span>
               </div>
-              <button className="bg-lime text-dk font-bold text-sm px-4 py-2 rounded w-full hover:bg-lime/90 hover:scale-105 transition-all duration-300 shadow-lg">
+              <button className="bg-customSalmon text-white font-bold text-sm px-4 py-2 rounded w-full hover:bg-customSalmon/90 hover:scale-105 transition-all duration-300 shadow-lg">
                 Order Now
               </button>
             </div>

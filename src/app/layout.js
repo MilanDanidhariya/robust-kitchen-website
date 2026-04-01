@@ -21,7 +21,7 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata = {
   title: "Robust Kitchen — Therapeutic Meals by Dieticians",
-  description: "Robust Kitchen serves clinician-designed, preservative-free therapeutic meals at Kadicare & online. In-house chefs & dieticians. Clean label food for diabetes, PCOD, gut health.",
+  description: "Robust Kitchen serves clinician-designed, preservative-free therapeutic meals at Kadji care & online. In-house chefs & dieticians. Clean label food for diabetes, PCOD, gut health.",
 };
 
 export default function RootLayout({ children }) {

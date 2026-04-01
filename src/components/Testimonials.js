@@ -27,7 +27,7 @@ export default function Testimonials() {
               ))}
             </div>
             <div className="text-text text-sm italic leading-relaxed mb-3">
-              "[Add real client testimonial — 2–3 sentences on health improvement at Kadicare. E.g. diabetes managed, PCOD improved, energy up.]"
+              "[Add real client testimonial — 2–3 sentences on health improvement at Kadji care. E.g. diabetes managed, PCOD improved, energy up.]"
             </div>
             <div className="text-green font-bold text-sm">[Client Name]</div>
             <div className="text-muted text-xs">[Condition · City]</div>
@@ -53,10 +53,10 @@ export default function Testimonials() {
               ))}
             </div>
             <div className="text-text text-sm italic leading-relaxed mb-3">
-              "[Kadicare patient or staff testimonial — quality of food and how it supports daily health and recovery.]"
+              "[Kadji care patient or staff testimonial — quality of food and how it supports daily health and recovery.]"
             </div>
             <div className="text-green font-bold text-sm">[Name]</div>
-            <div className="text-muted text-xs">[Patient / Staff · Kadicare]</div>
+            <div className="text-muted text-xs">[Patient / Staff · Kadji care]</div>
           </div>
         </div>
       </div>
