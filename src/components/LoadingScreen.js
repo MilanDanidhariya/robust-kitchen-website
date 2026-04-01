@@ -14,8 +14,8 @@ export default function LoadingScreen({ onComplete }) {
         if (prev >= 100) {
           clearInterval(interval);
           setTimeout(() => {
-            // setIsVisible(false);
-            // onComplete();
+            setIsVisible(false);
+            onComplete();
           }, 500);
           return 100;
         }
