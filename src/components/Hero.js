@@ -114,7 +114,7 @@ export default function Hero() {
                 Free Health Assessment
               </a> */}
               <a
-                href="#tracker"
+                href="/assessment"
                 className="text-customSalmon/90 border-2 border-customSalmon/30 text-sm px-8 py-4 rounded-lg transition-all hover:bg-customSalmon/10 hover:border-customSalmon/50 hover:text-customSalmon hover:scale-105 transform"
               >
                 Free Health Assessment

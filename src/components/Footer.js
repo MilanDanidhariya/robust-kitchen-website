@@ -28,7 +28,7 @@ export default function Footer() {
             <a href="#about" className="block text-white/60 text-sm mb-2 hover:text-lime hover:translate-x-1 transition-all duration-300">About Us</a>
             <a href="#products" className="block text-white/60 text-sm mb-2 hover:text-lime hover:translate-x-1 transition-all duration-300">Products</a>
             <a href="#community" className="block text-white/60 text-sm mb-2 hover:text-lime hover:translate-x-1 transition-all duration-300">Community</a>
-            <a href="#tracker" className="block text-white/60 text-sm mb-2 hover:text-lime hover:translate-x-1 transition-all duration-300">Assessment</a>
+            <a href="/assessment" className="block text-white/60 text-sm mb-2 hover:text-lime hover:translate-x-1 transition-all duration-300">Assessment</a>
             <a href="#join" className="block text-white/60 text-sm mb-2 hover:text-lime hover:translate-x-1 transition-all duration-300">Join Us</a>
           </div>
 
@@ -46,7 +46,7 @@ export default function Footer() {
             <a href="#" className="block text-white/60 text-sm mb-2 hover:text-lime hover:translate-x-1 transition-all duration-300">Instagram</a>
             <a href="#" className="block text-white/60 text-sm mb-2 hover:text-lime hover:translate-x-1 transition-all duration-300">Facebook</a>
             <a href="#join" className="block text-white/60 text-sm mb-2 hover:text-lime hover:translate-x-1 transition-all duration-300">Book Consultation</a>
-            <a href="#tracker" className="block text-white/60 text-sm mb-2 hover:text-lime hover:translate-x-1 transition-all duration-300">Free Assessment</a>
+            <a href="/assessment" className="block text-white/60 text-sm mb-2 hover:text-lime hover:translate-x-1 transition-all duration-300">Free Assessment</a>
           </div>
         </div>
 
