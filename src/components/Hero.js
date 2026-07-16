@@ -74,53 +74,64 @@ export default function Hero() {
     setShowResult(true);
   };
   return (
-    <section id="home" className="bg-dk py-20 px-0 relative overflow-hidden min-h-screen flex items-center">
-      <div className="absolute inset-0 bg-radial-gradient from-lime/10 to-transparent animate-pulse"></div>
-      <div className="max-w-6xl mx-auto px-10 relative w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+    <section id="home" className="bg-hero-ivory py-20 px-0 relative overflow-hidden min-h-screen flex items-center">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_18%,rgba(240,120,108,0.08),transparent_28%),radial-gradient(circle_at_80%_82%,rgba(252,228,84,0.14),transparent_30%)]"></div>
+      <div className="max-w-6xl mx-auto px-8 md:px-10 relative w-full">
+        <div className="max-w-2xl">
           <div className="animate-fade-in-up">
-            <span className="font-jetbrains-mono text-xs uppercase tracking-widest text-lime block mb-4 animate-bounce">India's Therapeutic Kitchen</span>
-            <h1 className="font-cormorant-garamond text-5xl lg:text-7xl font-bold leading-tight mb-8 text-white">
-              <span className="text-lime animate-pulse">Unleash</span> the Best<br />
-              Within You Through<br />
+            <div className="mb-8 flex items-center gap-4">
+              <span className="h-px w-12 bg-hero-coral"></span>
+              <span className="font-jetbrains-mono text-xs uppercase tracking-[0.45em] text-hero-rose">India&apos;s Therapeutic Kitchen</span>
+            </div>
+            <h1 className="font-cormorant-garamond text-6xl md:text-7xl lg:text-8xl font-bold leading-[0.9] mb-6 text-hero-ink">
+              <span className="text-hero-coral">Unleash</span> the Best<br />
+              Within You<br />
+              Through<br />
               {/* <span className="text-gold animate-pulse">Nutrition</span> */}
-              <span className="text-customSalmon animate-pulse">Nutrition</span>
+              Nutrition
             </h1>
-            <p className="text-white/80 text-lg leading-relaxed mb-8 max-w-lg">
-              Robust Kitchen is India's most personalised therapeutic meal brand — powered by in-house dieticians, run by trained chefs, and built on one promise: food that genuinely heals.
+            <div className="h-1.5 w-72 max-w-full bg-hero-yellow mb-7"></div>
+            <p className="text-hero-stone text-xl md:text-2xl leading-relaxed mb-11 max-w-xl">
+              Robust Kitchen is India&apos;s most personalised therapeutic meal brand — powered by in-house dieticians, run by trained chefs, and built on one promise: food that genuinely heals.
             </p>
             <div className="flex flex-wrap gap-3 mb-10">
-              <span className="bg-white/10 backdrop-blur-sm border border-white/20 text-white/90 text-sm px-4 py-2 rounded-full font-jetbrains-mono hover:bg-white/20 transition-all hover:scale-105 transform cursor-pointer">
+              <span className="bg-transparent border border-hero-coral/25 text-hero-coral text-sm px-6 py-3 rounded-full font-semibold tracking-wide">
                 Zero Preservatives
               </span>
-              <span className="bg-white/10 backdrop-blur-sm border border-white/20 text-white/90 text-sm px-4 py-2 rounded-full font-jetbrains-mono hover:bg-white/20 transition-all hover:scale-105 transform cursor-pointer">
+              <span className="bg-transparent border border-hero-stone/35 text-hero-ink text-sm px-6 py-3 rounded-full font-semibold tracking-wide">
                 Dietician Designed
               </span>
-              <span className="bg-lime/20 backdrop-blur-sm border border-lime/30 text-lime text-sm px-4 py-2 rounded-full font-jetbrains-mono hover:bg-lime/30 transition-all hover:scale-105 transform cursor-pointer">
+              <span className="bg-hero-yellow border border-hero-yellow text-hero-ink text-sm px-6 py-3 rounded-full font-semibold tracking-wide">
                 Clean Label
               </span>
-              <span className="bg-white/10 backdrop-blur-sm border border-white/20 text-white/90 text-sm px-4 py-2 rounded-full font-jetbrains-mono hover:bg-white/20 transition-all hover:scale-105 transform cursor-pointer">
+              <span className="hidden">
                 Now at Kadji care
               </span>
-              <span className="bg-white/10 backdrop-blur-sm border border-white/20 text-white/90 text-sm px-4 py-2 rounded-full font-jetbrains-mono hover:bg-white/20 transition-all hover:scale-105 transform cursor-pointer">
+              <span className="hidden">
                 Diabetes · PCOD · Gut Health
               </span>
             </div>
-            <div className="flex flex-wrap gap-4 mb-12">
-              <a href="#join" className="bg-lime text-dk font-bold text-sm px-8 py-4 rounded-lg transition-all hover:bg-lime/90 hover:scale-105 hover:shadow-lg transform animate-pulse shadow-lime/50">
+            <div className="flex flex-wrap gap-4">
+              <a href="/contact#join" className="bg-hero-coral text-hero-ink font-bold text-sm px-8 py-4 rounded-lg transition-all hover:bg-hero-coral/90 hover:scale-105 hover:shadow-lg transform">
                 Start My Meal Plan
               </a>
               {/* <a href="#tracker" className="text-white/90 border-2 border-white/30 text-sm px-8 py-4 rounded-lg transition-all hover:bg-white/10 hover:border-white/50 hover:scale-105 transform">
                 Free Health Assessment
               </a> */}
-              <a
+              {/* <a
                 href="/assessment"
-                className="text-customSalmon/90 border-2 border-customSalmon/30 text-sm px-8 py-4 rounded-lg transition-all hover:bg-customSalmon/10 hover:border-customSalmon/50 hover:text-customSalmon hover:scale-105 transform"
+                className="text-hero-coral border-2 border-hero-coral/30 text-sm px-8 py-4 rounded-lg transition-all hover:bg-hero-coral/10 hover:border-hero-coral/50 hover:scale-105 transform"
               >
                 Free Health Assessment
+              </a> */}
+               <a
+                href="/bmi-calculator"
+                className="text-hero-coral border-2 border-hero-coral/30 text-sm px-8 py-4 rounded-lg transition-all hover:bg-hero-coral/10 hover:border-hero-coral/50 hover:scale-105 transform"
+              >
+                Check Your BMI
               </a>
             </div>
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="hidden">
               <div className="text-center animate-fade-in-up" style={{ animationDelay: '0.2s', animationFillMode: 'both' }}>
                 <div className="font-cormorant-garamond text-4xl font-bold text-lime mb-2">100%</div>
                 <div className="text-xs uppercase tracking-wider text-white/60">Preservative Free</div>
@@ -139,7 +150,7 @@ export default function Hero() {
               </div>
             </div>
           </div>
-          <div className="animate-slide-in-right space-y-6">
+          <div className="hidden">
             <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-all hover:scale-105 transform">
               <div className="bg-gradient-to-br from-light to-border/70 border-2 border-dashed border-lime rounded-xl flex flex-col items-center justify-center text-mid font-jetbrains-mono text-center p-6 h-64">
                 <div className="text-3xl mb-2">📸</div>

@@ -1,4 +1,5 @@
 import { Wheat, Sandwich, Zap, Dumbbell, Play } from 'lucide-react';
+import Image from 'next/image';
 
 export default function Products() {
   return (
@@ -22,8 +23,10 @@ export default function Products() {
             Every Robust Kitchen product is preservative-free, dietician-formulated, and designed for people managing diabetes, PCOD, gut health, and daily wellness. Available online.
           </p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div className="bg-white rounded-xl overflow-hidden border border-border transition-all hover:shadow-xl hover:-translate-y-2 hover:scale-105 duration-300 animate-fade-in-up group" style={{ animationDelay: '0.4s', animationFillMode: 'both' }}>
+
+        {/* 4 products grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 hidden">
+          <div className="bg-white rounded-xl overflow-hidden border border-border transition-all hover:shadow-xl hover:-translate-y-2 hover:scale-105 duration-300 animate-fade-in-up group flex h-full flex-col" style={{ animationDelay: '0.4s', animationFillMode: 'both' }}>
             <div className="h-48 bg-gradient-to-br from-light to-border/70 border-2 border-dashed border-lime rounded-t-xl flex flex-col items-center justify-center text-mid font-jetbrains-mono text-center p-4 relative">
               <div className="absolute inset-0 bg-gradient-to-br from-lime/10 to-gold/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-t-xl"></div>
               <Wheat className="w-12 h-12 mx-auto mb-2 text-mid hover:text-lime transition-colors duration-300" />
@@ -32,7 +35,7 @@ export default function Products() {
                 500×400px · WebP
               </div>
             </div>
-            <div className="p-5">
+            <div className="p-5 flex flex-1 flex-col">
               <div className="font-cormorant-garamond text-lg font-bold text-green mb-2">100% Wheat Bread</div>
               <div className="text-sm text-muted leading-relaxed mb-3">
                 Pure whole wheat, slow-fermented for better gut digestibility and lower glycaemic impact. No maida, no preservatives — ever.
@@ -44,13 +47,13 @@ export default function Products() {
                 <span className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">Gut Friendly</span>
               </div>
               {/* <button className="bg-lime text-dk font-bold text-sm px-4 py-2 rounded w-full hover:bg-lime/90 hover:scale-105 transition-all duration-300 shadow-lg"> */}
-              <button className="bg-customSalmon text-white font-bold text-sm px-4 py-2 rounded w-full hover:bg-customSalmon/90 hover:scale-105 transition-all duration-300 shadow-lg">
+              <button className="bg-customSalmon text-white font-bold text-sm px-4 py-2 rounded w-full hover:bg-customSalmon/90 hover:scale-105 transition-all duration-300 shadow-lg mt-auto">
                 Order Now
               </button>
             </div>
           </div>
 
-          <div className="bg-white rounded-xl overflow-hidden border border-border transition-all hover:shadow-xl hover:-translate-y-2 hover:scale-105 duration-300 animate-fade-in-up group" style={{ animationDelay: '0.5s', animationFillMode: 'both' }}>
+          <div className="bg-white rounded-xl overflow-hidden border border-border transition-all hover:shadow-xl hover:-translate-y-2 hover:scale-105 duration-300 animate-fade-in-up group flex h-full flex-col" style={{ animationDelay: '0.5s', animationFillMode: 'both' }}>
             <div className="h-48 bg-gradient-to-br from-light to-border/70 border-2 border-dashed border-lime rounded-t-xl flex flex-col items-center justify-center text-mid font-jetbrains-mono text-center p-4 relative">
               <div className="absolute inset-0 bg-gradient-to-br from-lime/10 to-gold/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-t-xl"></div>
               <Sandwich className="w-12 h-12 mx-auto mb-2 text-mid hover:text-lime transition-colors duration-300" />
@@ -59,7 +62,7 @@ export default function Products() {
                 500×400px · WebP
               </div>
             </div>
-            <div className="p-5">
+            <div className="p-5 flex flex-1 flex-col">
               <div className="font-cormorant-garamond text-lg font-bold text-green mb-2">Fortified Bread</div>
               <div className="text-sm text-muted leading-relaxed mb-3">
                 Enriched with iron, folate, B12, Vitamin D, and zinc — targeting the most common nutritional deficiencies in Indian women and active adults.
@@ -69,13 +72,13 @@ export default function Products() {
                 <span className="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full">PCOD Support</span>
                 <span className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">Zero Preservatives</span>
               </div>
-              <button className="bg-customSalmon text-white font-bold text-sm px-4 py-2 rounded w-full hover:bg-customSalmon/90 hover:scale-105 transition-all duration-300 shadow-lg">
+              <button className="bg-customSalmon text-white font-bold text-sm px-4 py-2 rounded w-full hover:bg-customSalmon/90 hover:scale-105 transition-all duration-300 shadow-lg mt-auto">
                 Order Now
               </button>
             </div>
           </div>
 
-          <div className="bg-white rounded-xl overflow-hidden border border-border transition-all hover:shadow-xl hover:-translate-y-2 hover:scale-105 duration-300 animate-fade-in-up group" style={{ animationDelay: '0.6s', animationFillMode: 'both' }}>
+          <div className="bg-white rounded-xl overflow-hidden border border-border transition-all hover:shadow-xl hover:-translate-y-2 hover:scale-105 duration-300 animate-fade-in-up group flex h-full flex-col" style={{ animationDelay: '0.6s', animationFillMode: 'both' }}>
             <div className="h-48 bg-gradient-to-br from-light to-border/70 border-2 border-dashed border-lime rounded-t-xl flex flex-col items-center justify-center text-mid font-jetbrains-mono text-center p-4 relative">
               <div className="absolute inset-0 bg-gradient-to-br from-lime/10 to-gold/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-t-xl"></div>
               <Zap className="w-12 h-12 mx-auto mb-2 text-mid hover:text-lime transition-colors duration-300" />
@@ -84,7 +87,7 @@ export default function Products() {
                 500×400px · WebP
               </div>
             </div>
-            <div className="p-5">
+            <div className="p-5 flex flex-1 flex-col">
               <div className="font-cormorant-garamond text-lg font-bold text-green mb-2">Energy Bar</div>
               <div className="text-sm text-muted leading-relaxed mb-3">
                 Complex carbs + natural energy sources for sustained, steady energy all day — no blood sugar spike or crash from conventional bars.
@@ -94,13 +97,13 @@ export default function Products() {
                 <span className="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full">Sustained Energy</span>
                 <span className="bg-red-100 text-red-800 text-xs px-2 py-1 rounded-full">Diabetic Safe</span>
               </div>
-              <button className="bg-customSalmon text-white font-bold text-sm px-4 py-2 rounded w-full hover:bg-customSalmon/90 hover:scale-105 transition-all duration-300 shadow-lg">
+              <button className="bg-customSalmon text-white font-bold text-sm px-4 py-2 rounded w-full hover:bg-customSalmon/90 hover:scale-105 transition-all duration-300 shadow-lg mt-auto">
                 Order Now
               </button>
             </div>
           </div>
 
-          <div className="bg-white rounded-xl overflow-hidden border border-border transition-all hover:shadow-xl hover:-translate-y-2 hover:scale-105 duration-300 animate-fade-in-up group" style={{ animationDelay: '0.7s', animationFillMode: 'both' }}>
+          <div className="bg-white rounded-xl overflow-hidden border border-border transition-all hover:shadow-xl hover:-translate-y-2 hover:scale-105 duration-300 animate-fade-in-up group flex h-full flex-col" style={{ animationDelay: '0.7s', animationFillMode: 'both' }}>
             <div className="h-48 bg-gradient-to-br from-light to-border/70 border-2 border-dashed border-lime rounded-t-xl flex flex-col items-center justify-center text-mid font-jetbrains-mono text-center p-4 relative">
               <div className="absolute inset-0 bg-gradient-to-br from-lime/10 to-gold/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-t-xl"></div>
               <Dumbbell className="w-12 h-12 mx-auto mb-2 text-mid hover:text-lime transition-colors duration-300" />
@@ -109,7 +112,7 @@ export default function Products() {
                 500×400px · WebP
               </div>
             </div>
-            <div className="p-5">
+            <div className="p-5 flex flex-1 flex-col">
               <div className="font-cormorant-garamond text-lg font-bold text-green mb-2">Protein Bar</div>
               <div className="text-sm text-muted leading-relaxed mb-3">
                 High protein, no artificial powder, no hidden sugar. Clean-source protein for muscle recovery, satiety, and metabolic health.
@@ -119,8 +122,158 @@ export default function Products() {
                 <span className="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full">No Added Sugar</span>
                 <span className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">PCOD Friendly</span>
               </div>
-              <button className="bg-customSalmon text-white font-bold text-sm px-4 py-2 rounded w-full hover:bg-customSalmon/90 hover:scale-105 transition-all duration-300 shadow-lg">
+              <button className="bg-customSalmon text-white font-bold text-sm px-4 py-2 rounded w-full hover:bg-customSalmon/90 hover:scale-105 transition-all duration-300 shadow-lg mt-auto">
                 Order Now
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* 3 products grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div
+            className="bg-white rounded-xl overflow-hidden border border-border transition-all hover:shadow-xl hover:-translate-y-2 hover:scale-105 duration-300 animate-fade-in-up group flex h-full flex-col"
+            style={{ animationDelay: "0.4s", animationFillMode: "both" }}
+          >
+            <div className=" overflow-hidden bg-white">
+              <Image
+                src="/images/products/watermelon-multivitamin-jam.jpeg"
+                alt="Watermelon Multivitamin Jam"
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                width={500}
+                height={500}
+              />
+            </div>
+
+            <div className="p-5 flex flex-1 flex-col">
+              <h3 className="font-cormorant-garamond text-xl font-bold text-green mb-2">
+                Watermelon Multivitamin Jam
+              </h3>
+
+              <p className="text-sm text-muted leading-relaxed mb-3">
+                A delicious watermelon jam naturally enriched with essential vitamins and
+                minerals to support everyday nutrition. Made without artificial colours
+                or preservatives.
+              </p>
+
+              <div className="flex flex-wrap gap-2 mb-4">
+                <span className="bg-red-100 text-red-800 text-xs px-2 py-1 rounded-full">
+                  Vitamins A, B1, B3 & E
+                </span>
+
+                <span className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">
+                  Calcium + Iron
+                </span>
+
+                <span className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">
+                  Zinc & Magnesium
+                </span>
+
+                <span className="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full">
+                  No Preservatives
+                </span>
+              </div>
+
+              <button className="bg-customSalmon text-white font-bold text-sm px-4 py-2 rounded w-full hover:bg-customSalmon/90 hover:scale-105 transition-all duration-300 shadow-lg mt-auto">
+                I&apos;m Interested
+              </button>
+            </div>
+          </div>
+
+          <div
+            className="bg-white rounded-xl overflow-hidden border border-border transition-all hover:shadow-xl hover:-translate-y-2 hover:scale-105 duration-300 animate-fade-in-up group flex h-full flex-col"
+            style={{ animationDelay: "0.5s", animationFillMode: "both" }}
+          >
+            <div className=" overflow-hidden bg-white">
+              <Image
+                src="/images/products/pineapple-multivitamin-jam.jpeg"
+                alt="Pineapple Multivitamin Jam"
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                width={500}
+                height={500}
+              />
+            </div>
+
+            <div className="p-5 flex flex-1 flex-col">
+              <h3 className="font-cormorant-garamond text-xl font-bold text-green mb-2">
+                Pineapple Multivitamin Jam
+              </h3>
+
+              <p className="text-sm text-muted leading-relaxed mb-3">
+                A tropical pineapple jam fortified with essential vitamins and minerals,
+                delivering great taste and everyday nutrition without artificial colours
+                or preservatives.
+              </p>
+
+              <div className="flex flex-wrap gap-2 mb-4">
+                <span className="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full">
+                  Vitamins A, B1, B3 & E
+                </span>
+
+                <span className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">
+                  Calcium + Iron
+                </span>
+
+                <span className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">
+                  Zinc & Magnesium
+                </span>
+
+                <span className="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded-full">
+                  No Preservatives
+                </span>
+              </div>
+
+              <button className="bg-customSalmon text-white font-bold text-sm px-4 py-2 rounded w-full hover:bg-customSalmon/90 hover:scale-105 transition-all duration-300 shadow-lg mt-auto">
+                I&apos;m Interested
+              </button>
+            </div>
+          </div>
+
+          <div
+            className="bg-white rounded-xl overflow-hidden border border-border transition-all hover:shadow-xl hover:-translate-y-2 hover:scale-105 duration-300 animate-fade-in-up group flex h-full flex-col"
+            style={{ animationDelay: "0.6s", animationFillMode: "both" }}
+          >
+            <div className=" overflow-hidden bg-white">
+              <Image
+                src="/images/products/whole-wheat-bread.jpeg"
+                alt="100% Whole Wheat Bread"
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                width={500}
+                height={500}
+              />
+            </div>
+
+            <div className="p-5 flex flex-1 flex-col">
+              <h3 className="font-cormorant-garamond text-xl font-bold text-green mb-2">
+                100% Whole Wheat Bread
+              </h3>
+
+              <p className="text-sm text-muted leading-relaxed mb-3">
+                Freshly baked whole wheat bread made with simple, wholesome ingredients
+                including whole wheat flour, olive oil, honey, and yeast. Soft, nutritious,
+                and free from artificial preservatives.
+              </p>
+
+              <div className="flex flex-wrap gap-2 mb-4">
+                <span className="bg-amber-100 text-amber-800 text-xs px-2 py-1 rounded-full">
+                  100% Whole Wheat
+                </span>
+
+                <span className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">
+                  No Preservatives
+                </span>
+
+                <span className="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full">
+                  High Fibre
+                </span>
+
+                <span className="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded-full">
+                  Freshly Baked
+                </span>
+              </div>
+
+              <button className="bg-customSalmon text-white font-bold text-sm px-4 py-2 rounded w-full hover:bg-customSalmon/90 hover:scale-105 transition-all duration-300 shadow-lg mt-auto">
+                I&apos;m Interested
               </button>
             </div>
           </div>
@@ -135,7 +288,7 @@ export default function Products() {
               <Play className="w-16 h-16 mx-auto mb-4 text-gold hover:text-lime transition-colors duration-300" />
               <div className="font-bold text-xs mt-2">VIDEO — Product Range Showcase</div>
               <div className="text-xs text-gold/60 leading-relaxed mt-1">
-                60 sec showing all 4 products · ingredients in frame · "Made in our clean kitchen" theme<br />
+                60 sec showing all 4 products · ingredients in frame · &quot;Made in our clean kitchen&quot; theme<br />
                 No background music that drowns the visual · Subtitles on
               </div>
             </div>

@@ -1,23 +1,49 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-  /* Brand Colors */
-  --dk: #0b1a0f;
-  --green: #163d22;
-  --mid: #265c35;
-  --lime: #6abf45;
-  --gold: #d4a935;
-  --rust: #b84828;
-  --cream: #f8f4ed;
-  --offwhite: #fdfaf5;
-  --text: #1a2e1e;
-  --muted: #4a6652;
-  --border: #ccddc4;
-  --light: #e4f0db;
+  /* Previous palette */
+  /* --background: #ffffff; */
+  /* --foreground: #171717; */
+  /* --dk: #0b1a0f; */
+  /* --green: #163d22; */
+  /* --mid: #265c35; */
+  /* --lime: #6abf45; */
+  /* --gold: #d4a935; */
+  /* --rust: #b84828; */
+  /* --cream: #f8f4ed; */
+  /* --offwhite: #fdfaf5; */
+  /* --text: #1a2e1e; */
+  /* --muted: #4a6652; */
+  /* --border: #ccddc4; */
+  /* --light: #e4f0db; */
+  /* --white: #ffffff; */
+  /* --customSalmon: #ed7e6d; */
+
+  /* Image-inspired brand palette */
+  --background: #fffaf0;
+  --foreground: #100d0b;
+  --dk: #100d0b;
+  --green: #201010;
+  --mid: #6f6860;
+  --lime: #f0786c;
+  --gold: #fce454;
+  --rust: #d88478;
+  --cream: #fcf0e4;
+  --offwhite: #fffdf7;
+  --text: #201815;
+  --muted: #6f6860;
+  --border: #ded8cc;
+  --light: #fcf0e4;
   --white: #ffffff;
-  --customSalmon: #ed7e6d;
+  --customSalmon: #f0786c;
+
+  --hero-ivory: #fffaf0;
+  --hero-ink: #100d0b;
+  --hero-coral: #f0786c;
+  --hero-yellow: #fce454;
+  --hero-rose: #d88478;
+  --hero-stone: #6f6860;
+  --hero-border: #ded8cc;
 }
 
 @theme inline {
@@ -37,6 +63,13 @@
   --color-light: var(--light);
   --color-white: var(--white);
   --color-customSalmon: var(--customSalmon);
+  --color-hero-ivory: var(--hero-ivory);
+  --color-hero-ink: var(--hero-ink);
+  --color-hero-coral: var(--hero-coral);
+  --color-hero-yellow: var(--hero-yellow);
+  --color-hero-rose: var(--hero-rose);
+  --color-hero-stone: var(--hero-stone);
+  --color-hero-border: var(--hero-border);
   --font-cormorant-garamond: var(--font-cormorant-garamond);
   --font-outfit: var(--font-outfit);
   --font-jetbrains-mono: var(--font-jetbrains-mono);
@@ -116,7 +149,7 @@ body {
 
 /* Navbar Styles */
 .nav-link {
-  color: rgba(255, 255, 255, 0.8);
+  color: color-mix(in srgb, var(--hero-ink) 72%, transparent);
   text-decoration: none;
   font-size: 14px;
   font-weight: 500;
@@ -137,7 +170,7 @@ body {
   left: 0;
   width: 0;
   height: 3px;
-  background: linear-gradient(90deg, var(--lime), var(--gold));
+  background: linear-gradient(90deg, var(--hero-coral), var(--hero-yellow));
   transition: width 0.3s ease;
 }
 
@@ -147,16 +180,16 @@ body {
 }
 
 .nav-link:hover {
-  color: var(--lime);
+  color: var(--hero-coral);
 }
 
 .nav-link.active {
-  color: var(--lime);
+  color: var(--hero-coral);
 }
 
 .nav-link.cta {
-  background: linear-gradient(135deg, var(--lime), #5aab3d);
-  color: var(--dk);
+  background: linear-gradient(135deg, var(--hero-coral), var(--hero-yellow));
+  color: var(--hero-ink);
   font-size: 14px;
   font-weight: 700;
   padding: 12px 24px;
@@ -165,13 +198,13 @@ body {
   white-space: nowrap;
   border-bottom: none;
   margin-left: 12px;
-  box-shadow: 0 4px 15px rgba(106, 191, 69, 0.3);
+  box-shadow: 0 4px 15px rgba(240, 120, 108, 0.22);
   transition: all 0.3s ease;
 }
 
 .nav-link.cta:hover {
-  background: linear-gradient(135deg, #5aab3d, var(--lime));
+  background: linear-gradient(135deg, var(--hero-yellow), var(--hero-coral));
   /* transform: translateY(-2px) scale(1.05); */
   transform: scale(1.05);
-  box-shadow: 0 8px 25px rgba(106, 191, 69, 0.4);
+  box-shadow: 0 8px 25px rgba(240, 120, 108, 0.3);
 }
