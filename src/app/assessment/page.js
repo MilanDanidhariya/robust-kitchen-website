@@ -4,6 +4,7 @@ import { useRef, useState } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import LoadingScreen from '@/components/LoadingScreen';
+import AssessmentReport from '@/components/AssessmentReport';
 import {
   AlertCircle,
   AlertTriangle,
@@ -27,6 +28,123 @@ import { useRouter } from 'next/navigation';
 const BRAND = "#2D6A2D";
 const BRAND_LIGHT = "#E8F5E9";
 const BRAND_MID = "#4CAF50";
+
+/**
+ * ConflictModal
+ * Blocking dialog used whenever two answers contradict each other. Confirm
+ * changes the other answer; cancel undoes what the user just did.
+ */
+function ConflictModal({ title, body, confirmLabel, cancelLabel, onConfirm, onCancel }) {
+  return (
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-label={title}
+      onClick={onCancel}
+      style={{
+        position: "fixed", inset: 0, zIndex: 100, display: "flex", alignItems: "center",
+        justifyContent: "center", padding: 16, background: "rgba(16,13,11,0.55)",
+      }}
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        style={{
+          background: "#fff", borderRadius: 16, padding: "26px 24px", maxWidth: 460, width: "100%",
+          boxShadow: "0 18px 50px rgba(0,0,0,0.25)", fontFamily: "'DM Sans', 'Segoe UI', sans-serif",
+        }}
+      >
+        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
+          <AlertTriangle size={22} strokeWidth={2.2} color={FLAG_COLORS.orange.border} aria-hidden="true" />
+          <h2 style={{ fontSize: 18, fontWeight: 700, color: "#1a1a1a", margin: 0 }}>{title}</h2>
+        </div>
+
+        <p style={{ fontSize: 14, lineHeight: 1.6, color: "#555", marginBottom: 22 }}>{body}</p>
+
+        <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+          <button
+            onClick={onConfirm}
+            style={{
+              flex: 1, minWidth: 160, padding: "12px 14px", background: BRAND, color: "#fff", border: "none",
+              borderRadius: 12, fontSize: 14, fontWeight: 600, cursor: "pointer",
+            }}
+          >
+            {confirmLabel}
+          </button>
+          <button
+            onClick={onCancel}
+            style={{
+              flex: 1, minWidth: 160, padding: "12px 14px", background: "transparent", color: BRAND,
+              border: `1.5px solid ${BRAND}`, borderRadius: 12, fontSize: 14, fontWeight: 500, cursor: "pointer",
+            }}
+          >
+            {cancelLabel}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Plausible human ranges. Anything outside these is a typo, not a body, and the
+// form blocks on it rather than scoring nonsense.
+const BASICS_LIMITS = {
+  age: { min: 18, max: 100, label: "Age", unit: "years" },
+  height: { min: 120, max: 250, label: "Height", unit: "cm" },
+  weight: { min: 25, max: 300, label: "Weight", unit: "kg" },
+};
+
+// Protein sources that contradict a vegetarian/eggetarian preference, mapped to
+// the preference the user would have to move to.
+const PROTEIN_CONFLICTS = {
+  Egg: { Vegetarian: "Eggetarian" },
+  "Chicken / Fish": { Vegetarian: "Non-Vegetarian", Eggetarian: "Non-Vegetarian" },
+};
+
+const NO_DIGESTIVE_ISSUES = "None";
+const APPETITE_NORMAL_SCORE = 3;
+const MOBILITY_NORMAL_SCORE = 3;
+const ACTIVITY_ACTIVE_SCORE = 3;
+
+/**
+ * Validate one of the numeric basics fields.
+ * @returns {string} error message, or '' when valid
+ */
+function validateBasicNumber(field, value) {
+  const limit = BASICS_LIMITS[field];
+  if (!limit) return "";
+
+  const raw = String(value ?? "").trim();
+  if (!raw) return `${limit.label} is required.`;
+
+  const parsed = Number(raw);
+  if (!Number.isFinite(parsed)) return `Enter your ${limit.label.toLowerCase()} as a number.`;
+  if (parsed < limit.min || parsed > limit.max) {
+    return `${limit.label} must be between ${limit.min} and ${limit.max} ${limit.unit}.`;
+  }
+
+  return "";
+}
+
+/**
+ * Weight-change bands shown in kilograms.
+ * The clinical thresholds are 5% and 10% of body weight, so we convert those to
+ * kg against the weight the user entered rather than dropping the clinical basis.
+ */
+function buildWeightChangeOptions(baseOptions, weightKg) {
+  const weight = parseFloat(weightKg);
+  if (!weight || !Number.isFinite(weight)) return baseOptions;
+
+  const fmt = (n) => String(Math.round(n * 10) / 10);
+  const five = fmt(weight * 0.05);
+  const ten = fmt(weight * 0.1);
+  const bands = {
+    2: `Less than ${five} kg`,
+    1: `${five} – ${ten} kg`,
+    0: `More than ${ten} kg`,
+  };
+
+  return baseOptions.map((opt) => (bands[opt.score] ? { ...opt, label: bands[opt.score] } : opt));
+}
 
 const FLAG_COLORS = {
   green:  { bg: "#E8F5E9", border: "#4CAF50", text: "#1B5E20" },
@@ -70,17 +188,18 @@ const QUESTIONS = [
     sub: true,
     subQuestion: "Did your weight change in the last 3 months?",
     subOptions: ["No change (stable)", "I lost weight", "I gained weight"],
+    // Labels are rebuilt in kg from the user's own weight — see buildWeightChangeOptions.
+    // "No weight loss/gain" is deliberately absent: it contradicts having just said
+    // the weight changed, and is covered by the "No change (stable)" sub-answer.
     lossOptions: [
-      { score: 3, label: "No weight loss", flag: "green", msg: "Weight is stable", alert: "Your weight is stable — a good sign." },
-      { score: 2, label: "Less than 5% loss", flag: "yellow", msg: "Minor weight loss", alert: "Some weight change occurred. Monitor to ensure it's not a continuing trend." },
-      { score: 1, label: "5–10% loss", flag: "orange", msg: "Moderate weight loss", alert: "5–10% weight loss indicates moderate risk. Muscle loss may be affecting your nutritional status." },
-      { score: 0, label: "More than 10% loss", flag: "red", msg: "Significant weight loss", alert: "More than 10% weight loss is a serious clinical sign. Immediate evaluation is necessary." },
+      { score: 2, label: "A small amount", flag: "yellow", msg: "Minor weight loss", alert: "Some weight change occurred. Monitor to ensure it's not a continuing trend." },
+      { score: 1, label: "A moderate amount", flag: "orange", msg: "Moderate weight loss", alert: "This much weight loss indicates moderate risk. Muscle loss may be affecting your nutritional status." },
+      { score: 0, label: "A large amount", flag: "red", msg: "Significant weight loss", alert: "Weight loss of this magnitude is a serious clinical sign. Immediate evaluation is necessary." },
     ],
     gainOptions: [
-      { score: 3, label: "No weight gain", flag: "green", msg: "Weight is stable", alert: "Your weight is stable — a good sign." },
-      { score: 2, label: "Less than 5% gain", flag: "yellow", msg: "Slight weight gain", alert: "Some weight gain occurred. Monitor to ensure it's not a continuing trend." },
-      { score: 1, label: "5–10% gain", flag: "orange", msg: "Excess weight gain", alert: "5–10% weight gain indicates moderate risk. Fat accumulation may be affecting your nutritional status." },
-      { score: 0, label: "More than 10% gain", flag: "red", msg: "Rapid weight gain", alert: "More than 10% weight gain is a serious clinical sign. Immediate evaluation is necessary." },
+      { score: 2, label: "A small amount", flag: "yellow", msg: "Slight weight gain", alert: "Some weight gain occurred. Monitor to ensure it's not a continuing trend." },
+      { score: 1, label: "A moderate amount", flag: "orange", msg: "Excess weight gain", alert: "This much weight gain indicates moderate risk. Fat accumulation may be affecting your nutritional status." },
+      { score: 0, label: "A large amount", flag: "red", msg: "Rapid weight gain", alert: "Weight gain of this magnitude is a serious clinical sign. Immediate evaluation is necessary." },
     ],
   },
   {
@@ -141,6 +260,7 @@ const QUESTIONS = [
     id: "q9", section: "Daily Nutrient Intake", label: "Protein Intake Frequency",
     hasChecklist: true,
     checklistLabel: "Which protein sources do you consume? (tick all that apply)",
+    checklistHint: "Select at least one source.",
     checklistItems: ["Pulses / Beans", "Milk / Curd", "Paneer / Soya", "Egg", "Chicken / Fish"],
     options: [
       { score: 3, label: "Daily", flag: "green", msg: "Adequate protein intake", alert: "Great — you're meeting your daily protein needs for muscle repair and immunity." },
@@ -218,7 +338,8 @@ const QUESTIONS = [
     id: "q17", section: "Water & Digestion", label: "Appetite",
     hasDigestive: true,
     digestiveLabel: "Digestive issues (tick all that apply)",
-    digestiveItems: ["Gas / Bloating", "Acidity / Heartburn", "Constipation", "Diarrhea", "Nausea / Vomiting", "Indigestion"],
+    digestiveLabelHint: "Select at least one. Choose \"None\" if you have no digestive issues.",
+    digestiveItems: ["Gas / Bloating", "Acidity / Heartburn", "Constipation", "Diarrhea", "Nausea / Vomiting", "Indigestion", "None"],
     options: [
       { score: 3, label: "Normal", flag: "green", msg: "Healthy appetite", alert: "Normal appetite — your body's hunger signals are functioning well." },
       { score: 2, label: "Reduced", flag: "yellow", msg: "Slight reduction in appetite", alert: "Slightly reduced appetite may be related to stress, poor sleep, or a mild gut issue. Monitor and address early." },
@@ -256,7 +377,7 @@ const QUESTIONS = [
   {
     id: "q21", section: "Lifestyle Risk", label: "Tobacco / Alcohol Use",
     options: [
-      { score: 3, label: "Never", flag: "green", msg: "Healthy lifestyle", alert: "No tobacco or alcohol — your liver, lungs, and nutrient absorption are not being compromised." },
+      { score: 3, label: "Never", flag: "green", msg: "Healthy lifestyle", goodLabel: "No Tobacco / Alcohol Use", alert: "No tobacco or alcohol — your liver, lungs, and nutrient absorption are not being compromised." },
       { score: 2, label: "Occasionally (1–2 times per month)", flag: "yellow", msg: "Minimal risk", alert: "Occasional use carries low risk — but it should not become a habit as tolerance builds quickly." },
       { score: 1, label: "Weekly", flag: "orange", msg: "Moderate risk", alert: "Weekly use begins to visibly affect nutrient absorption, liver function, and immune response." },
       { score: 0, label: "Daily", flag: "red", msg: "High-risk habit", alert: "Daily tobacco or alcohol use severely impairs nutritional health — causing vitamin depletion and progressive liver damage." },
@@ -316,7 +437,19 @@ export default function AssessmentPage() {
   const [digestive, setDigestive] = useState([]);
   const [currentQ, setCurrentQ] = useState(0);
   const [results, setResults] = useState(null);
+  // Conflict dialog: { title, body, confirmLabel, cancelLabel, onConfirm, onCancel }
+  const [modal, setModal] = useState(null);
+  const [basicsTouched, setBasicsTouched] = useState({});
   const topRef = useRef(null);
+
+  const basicsErrors = {
+    age: validateBasicNumber("age", basics.age),
+    height: validateBasicNumber("height", basics.height),
+    weight: validateBasicNumber("weight", basics.weight),
+  };
+  const measurementsValid = !basicsErrors.height && !basicsErrors.weight;
+  const showBasicError = (field) => (basicsTouched[field] ? basicsErrors[field] : "");
+  const markBasicTouched = (field) => setBasicsTouched((prev) => ({ ...prev, [field]: true }));
 
   const bmi = calcBMI(basics.height, basics.weight);
   const bmiScore = getBMIScore(bmi, basics.age);
@@ -336,7 +469,14 @@ export default function AssessmentPage() {
 
   const progressPct = step === "questions" ? Math.round((currentQ / totalQ) * 100) : step === "results" ? 100 : 0;
 
-  const canProceedBasics = basics.name && basics.age && basics.gender && basics.height && basics.weight && basics.foodPref && basics.lifestyle;
+  const canProceedBasics =
+    basics.name &&
+    basics.gender &&
+    basics.foodPref &&
+    basics.lifestyle &&
+    !basicsErrors.age &&
+    !basicsErrors.height &&
+    !basicsErrors.weight;
 
   const getQ2Options = () => {
     if (q2Sub === "I lost weight") return currentQuestion.lossOptions;
@@ -352,7 +492,174 @@ export default function AssessmentPage() {
       if (q2Sub === "No change (stable)") return true;
       return answers[q.id] !== undefined;
     }
-    return answers[q.id] !== undefined;
+    if (answers[q.id] === undefined) return false;
+    // A protein source is required — unless the user just told us they rarely
+    // or never eat protein, in which case there is no source to name.
+    if (q.hasChecklist && answers[q.id] !== 0 && proteinSources.length === 0) return false;
+    if (q.hasDigestive && digestive.length === 0) return false;
+    return true;
+  };
+
+  /** Why the Next button is disabled, so the user is not left guessing. */
+  const blockingHint = () => {
+    const q = currentQuestion;
+    if (answers[q.id] === undefined && !q.sub && !q.computed) return "";
+    if (q.hasChecklist && answers[q.id] !== 0 && proteinSources.length === 0) {
+      return "Please select at least one protein source to continue.";
+    }
+    if (q.hasDigestive && digestive.length === 0) {
+      return `Please select your digestive issues, or "${NO_DIGESTIVE_ISSUES}" if you have none.`;
+    }
+    return "";
+  };
+
+  const closeModal = () => setModal(null);
+
+  const hasRealDigestiveIssue = (list) => list.some((d) => d !== NO_DIGESTIVE_ISSUES);
+
+  /**
+   * Protein sources: a non-veg source contradicts a vegetarian/eggetarian
+   * preference, so confirm before either changing the preference or backing out.
+   */
+  const handleProteinToggle = (item) => {
+    if (proteinSources.includes(item)) {
+      toggleProtein(item);
+      return;
+    }
+
+    const targetPref = PROTEIN_CONFLICTS[item]?.[basics.foodPref];
+    if (!targetPref) {
+      toggleProtein(item);
+      return;
+    }
+
+    setModal({
+      title: "This doesn't match your food preference",
+      body: `You selected ${basics.foodPref} earlier, but ${item} is not part of a ${basics.foodPref.toLowerCase()} diet. Would you like to change your food preference to ${targetPref}?`,
+      confirmLabel: `Yes, change to ${targetPref}`,
+      cancelLabel: `No, stay ${basics.foodPref}`,
+      onConfirm: () => {
+        handleBasicChange("foodPref", targetPref);
+        toggleProtein(item);
+        closeModal();
+      },
+      // Never added it, so backing out simply leaves it deselected.
+      onCancel: closeModal,
+    });
+  };
+
+  /** Digestive issues: "None" is exclusive, and issues conflict with a normal appetite. */
+  const handleDigestiveToggle = (item) => {
+    let next;
+    if (item === NO_DIGESTIVE_ISSUES) {
+      next = digestive.includes(item) ? [] : [NO_DIGESTIVE_ISSUES];
+    } else {
+      next = digestive.includes(item)
+        ? digestive.filter((d) => d !== item)
+        : [...digestive.filter((d) => d !== NO_DIGESTIVE_ISSUES), item];
+    }
+
+    if (hasRealDigestiveIssue(next) && answers.q17 === APPETITE_NORMAL_SCORE) {
+      setModal({
+        title: "Digestive issues with a normal appetite?",
+        body: "You selected a Normal appetite, but you are also reporting digestive issues. Digestive problems almost always affect appetite, so these two answers do not fit together.",
+        confirmLabel: "Keep the issues — I'll re-pick my appetite",
+        cancelLabel: "Keep my appetite as Normal",
+        onConfirm: () => {
+          setDigestive(next);
+          setAnswers((prev) => {
+            const updated = { ...prev };
+            delete updated.q17;
+            return updated;
+          });
+          closeModal();
+        },
+        onCancel: closeModal,
+      });
+      return;
+    }
+
+    setDigestive(next);
+  };
+
+  /**
+   * Route every option click through the cross-checks the clinician asked for
+   * before it lands in state.
+   */
+  const handleOptionSelect = (questionId, score) => {
+    const commit = () => setAnswers((prev) => ({ ...prev, [questionId]: score }));
+
+    // Appetite cannot be "Normal" alongside reported digestive issues.
+    if (questionId === "q17" && score === APPETITE_NORMAL_SCORE && hasRealDigestiveIssue(digestive)) {
+      setModal({
+        title: "Digestive issues with a normal appetite?",
+        body: `You reported ${digestive.join(", ")}, but you are selecting a Normal appetite. Digestive problems almost always affect appetite, so these two answers do not fit together.`,
+        confirmLabel: "Clear my digestive issues",
+        cancelLabel: "Keep my digestive issues",
+        onConfirm: () => {
+          setDigestive([NO_DIGESTIVE_ISSUES]);
+          commit();
+          closeModal();
+        },
+        onCancel: closeModal,
+      });
+      return;
+    }
+
+    // Regular exercise is not compatible with restricted mobility.
+    const mobilityIdx = QUESTIONS.findIndex((q) => q.id === "q18");
+    if (
+      questionId === "q20" &&
+      score === ACTIVITY_ACTIVE_SCORE &&
+      answers.q18 !== undefined &&
+      answers.q18 !== MOBILITY_NORMAL_SCORE
+    ) {
+      setModal({
+        title: "Regular exercise with limited mobility?",
+        body: "Earlier you said your mobility is limited, but you are selecting regular exercise of 30 minutes or more, 5 days a week. Which of the two should we correct?",
+        confirmLabel: "Go back and fix my mobility",
+        cancelLabel: "Pick a different activity level",
+        onConfirm: () => {
+          setAnswers((prev) => {
+            const updated = { ...prev };
+            delete updated.q18;
+            return updated;
+          });
+          setCurrentQ(mobilityIdx);
+          closeModal();
+          setTimeout(scrollTop, 50);
+        },
+        onCancel: closeModal,
+      });
+      return;
+    }
+
+    // Same conflict reached from the other side, after going back to mobility.
+    if (
+      questionId === "q18" &&
+      score !== MOBILITY_NORMAL_SCORE &&
+      answers.q20 === ACTIVITY_ACTIVE_SCORE
+    ) {
+      setModal({
+        title: "Limited mobility with regular exercise?",
+        body: "You already told us you exercise regularly for 30 minutes or more, 5 days a week. That does not fit with limited mobility.",
+        confirmLabel: "Keep this — clear my activity answer",
+        cancelLabel: "Keep my mobility as it was",
+        onConfirm: () => {
+          commit();
+          setAnswers((prev) => {
+            const updated = { ...prev, q18: score };
+            delete updated.q20;
+            return updated;
+          });
+          closeModal();
+        },
+        onCancel: closeModal,
+      });
+      return;
+    }
+
+    commit();
   };
 
   const computeResults = () => {
@@ -365,7 +672,7 @@ export default function AssessmentPage() {
       if (q.sub) {
         if (q2Sub === "No change (stable)") {
           score += 3;
-          flagMap[q.id] = { flag: "green", msg: "Weight is stable" };
+          flagMap[q.id] = { flag: "green", msg: "Weight is stable", label: q.label };
           return;
         }
         options = q2Sub === "I lost weight" ? q.lossOptions : q.gainOptions;
@@ -375,7 +682,7 @@ export default function AssessmentPage() {
         const opt = options.find(o => o.score === chosen);
         if (opt) {
           score += opt.score;
-          flagMap[q.id] = { flag: opt.flag, msg: opt.msg, alert: opt.alert, label: q.label };
+          flagMap[q.id] = { flag: opt.flag, msg: opt.msg, alert: opt.alert, label: opt.goodLabel || q.label };
         }
       }
     });
@@ -505,6 +812,8 @@ export default function AssessmentPage() {
 
   return (
     <div className="min-h-screen">
+      {/* .assessment-screen is hidden when printing — only the report goes to paper */}
+      <div className="assessment-screen">
       <LoadingScreen onComplete={() => setLoadingComplete(true)} />
       {loadingComplete && (
         <>
@@ -580,19 +889,61 @@ export default function AssessmentPage() {
             </div>
             <div>
               <label style={styles.label}>Age *</label>
-              <input className="w-full px-4 py-3 border border-gray-300 rounded-lg text-dk placeholder-gray-500 focus:ring-2 focus:ring-lime focus:border-transparent" style={styles.inputField} type="number" placeholder="Years" value={basics.age} onChange={e => handleBasicChange("age", e.target.value)} />
+              <input
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg text-dk placeholder-gray-500 focus:ring-2 focus:ring-lime focus:border-transparent"
+                style={{ ...styles.inputField, borderColor: showBasicError("age") ? FLAG_COLORS.red.border : undefined }}
+                type="number"
+                min={BASICS_LIMITS.age.min}
+                max={BASICS_LIMITS.age.max}
+                placeholder="Years"
+                value={basics.age}
+                onChange={e => handleBasicChange("age", e.target.value)}
+                onBlur={() => markBasicTouched("age")}
+                aria-invalid={showBasicError("age") ? "true" : "false"}
+              />
+              {showBasicError("age")
+                ? <div style={{ fontSize: 12, color: FLAG_COLORS.red.text, marginTop: 6 }}>{showBasicError("age")}</div>
+                : <div style={{ fontSize: 12, color: "#888", marginTop: 6 }}>18–100 years</div>}
             </div>
             <div>
               <label style={styles.label}>Height (cm) *</label>
-              <input className="w-full px-4 py-3 border border-gray-300 rounded-lg text-dk placeholder-gray-500 focus:ring-2 focus:ring-lime focus:border-transparent" style={styles.inputField} type="number" placeholder="e.g. 165" value={basics.height} onChange={e => handleBasicChange("height", e.target.value)} />
+              <input
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg text-dk placeholder-gray-500 focus:ring-2 focus:ring-lime focus:border-transparent"
+                style={{ ...styles.inputField, borderColor: showBasicError("height") ? FLAG_COLORS.red.border : undefined }}
+                type="number"
+                min={BASICS_LIMITS.height.min}
+                max={BASICS_LIMITS.height.max}
+                placeholder="e.g. 165"
+                value={basics.height}
+                onChange={e => handleBasicChange("height", e.target.value)}
+                onBlur={() => markBasicTouched("height")}
+                aria-invalid={showBasicError("height") ? "true" : "false"}
+              />
+              {showBasicError("height")
+                ? <div style={{ fontSize: 12, color: FLAG_COLORS.red.text, marginTop: 6 }}>{showBasicError("height")}</div>
+                : <div style={{ fontSize: 12, color: "#888", marginTop: 6 }}>120–250 cm</div>}
             </div>
             <div>
               <label style={styles.label}>Weight (kg) *</label>
-              <input className="w-full px-4 py-3 border border-gray-300 rounded-lg text-dk placeholder-gray-500 focus:ring-2 focus:ring-lime focus:border-transparent" style={styles.inputField} type="number" placeholder="e.g. 65" value={basics.weight} onChange={e => handleBasicChange("weight", e.target.value)} />
+              <input
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg text-dk placeholder-gray-500 focus:ring-2 focus:ring-lime focus:border-transparent"
+                style={{ ...styles.inputField, borderColor: showBasicError("weight") ? FLAG_COLORS.red.border : undefined }}
+                type="number"
+                min={BASICS_LIMITS.weight.min}
+                max={BASICS_LIMITS.weight.max}
+                placeholder="e.g. 65"
+                value={basics.weight}
+                onChange={e => handleBasicChange("weight", e.target.value)}
+                onBlur={() => markBasicTouched("weight")}
+                aria-invalid={showBasicError("weight") ? "true" : "false"}
+              />
+              {showBasicError("weight")
+                ? <div style={{ fontSize: 12, color: FLAG_COLORS.red.text, marginTop: 6 }}>{showBasicError("weight")}</div>
+                : <div style={{ fontSize: 12, color: "#888", marginTop: 6 }}>25–300 kg</div>}
             </div>
           </div>
 
-          {bmi && (
+          {bmi && measurementsValid && (
             <div style={{ marginTop: 12, padding: "12px 16px", background: BRAND_LIGHT, borderRadius: 10 }}>
               <span style={{ fontSize: 13, color: "#555" }}>Your BMI: </span>
               <strong style={{ fontSize: 16, color: BRAND }}>{bmi.toFixed(1)}</strong>
@@ -710,7 +1061,7 @@ export default function AssessmentPage() {
               {q2Sub && q2Sub !== "No change (stable)" && (
                 <div style={{ marginTop: 20 }}>
                   <div style={{ fontSize: 14, color: "#666", marginBottom: 12 }}>By approximately how much?</div>
-                  {getQ2Options().map(opt => (
+                  {buildWeightChangeOptions(getQ2Options(), basics.weight).map(opt => (
                     <button key={opt.score} style={styles.optionBtn(answers.q2 === opt.score, opt.flag)} onClick={() => setAnswers(prev => ({ ...prev, q2: opt.score }))}>
                       {opt.label}
                       <div style={styles.optionMeta}><FlagIcon flag={opt.flag} /><span>{opt.msg}</span></div>
@@ -722,7 +1073,7 @@ export default function AssessmentPage() {
           )}
 
           {!q.sub && !q.computed && q.options.map(opt => (
-            <button key={opt.score} style={styles.optionBtn(answers[q.id] === opt.score, opt.flag)} onClick={() => setAnswers(prev => ({ ...prev, [q.id]: opt.score }))}>
+            <button key={opt.score} style={styles.optionBtn(answers[q.id] === opt.score, opt.flag)} onClick={() => handleOptionSelect(q.id, opt.score)}>
               {opt.label}
               <div style={styles.optionMeta}><FlagIcon flag={opt.flag} /><span>{opt.msg}</span></div>
             </button>
@@ -737,10 +1088,11 @@ export default function AssessmentPage() {
 
           {q.hasChecklist && (
             <div style={{ marginTop: 20 }}>
-              <div style={{ fontSize: 14, fontWeight: 600, color: "#444", marginBottom: 10 }}>{q.checklistLabel}</div>
+              <div style={{ fontSize: 14, fontWeight: 600, color: "#444", marginBottom: 4 }}>{q.checklistLabel}</div>
+              {q.checklistHint && <div style={{ fontSize: 12, color: "#888", marginBottom: 10 }}>{q.checklistHint}</div>}
               <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
                 {q.checklistItems.map(item => (
-                  <button key={item} style={styles.checkChip(proteinSources.includes(item))} onClick={() => toggleProtein(item)}>{item}</button>
+                  <button key={item} style={styles.checkChip(proteinSources.includes(item))} onClick={() => handleProteinToggle(item)}>{item}</button>
                 ))}
               </div>
             </div>
@@ -748,12 +1100,19 @@ export default function AssessmentPage() {
 
           {q.hasDigestive && (
             <div style={{ marginTop: 20 }}>
-              <div style={{ fontSize: 14, fontWeight: 600, color: "#444", marginBottom: 10 }}>{q.digestiveLabel}</div>
+              <div style={{ fontSize: 14, fontWeight: 600, color: "#444", marginBottom: 4 }}>{q.digestiveLabel}</div>
+              {q.digestiveLabelHint && <div style={{ fontSize: 12, color: "#888", marginBottom: 10 }}>{q.digestiveLabelHint}</div>}
               <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
                 {q.digestiveItems.map(item => (
-                  <button key={item} style={styles.checkChip(digestive.includes(item))} onClick={() => toggleDigestive(item)}>{item}</button>
+                  <button key={item} style={styles.checkChip(digestive.includes(item))} onClick={() => handleDigestiveToggle(item)}>{item}</button>
                 ))}
               </div>
+            </div>
+          )}
+
+          {blockingHint() && (
+            <div style={{ marginTop: 16, padding: "10px 14px", borderRadius: 10, background: FLAG_COLORS.yellow.bg, border: `1px solid ${FLAG_COLORS.yellow.border}`, fontSize: 13, color: FLAG_COLORS.yellow.text }}>
+              {blockingHint()}
             </div>
           )}
 
@@ -892,7 +1251,7 @@ export default function AssessmentPage() {
           </button>
           <button style={{ ...styles.btnSecondary, padding: "16px", flex: "none" }} onClick={() => window.print()}>
             <Download size={18} strokeWidth={2.2} aria-hidden="true" />
-            <span>Download Meal Plan</span>
+            <span>Download Report</span>
           </button>
         </div>
 
@@ -913,8 +1272,25 @@ export default function AssessmentPage() {
             </div>
           </section>
 
+          {modal && (
+            <ConflictModal
+              title={modal.title}
+              body={modal.body}
+              confirmLabel={modal.confirmLabel}
+              cancelLabel={modal.cancelLabel}
+              onConfirm={modal.onConfirm}
+              onCancel={modal.onCancel}
+            />
+          )}
+
           <Footer />
         </>
+      )}
+      </div>
+
+      {/* Print-only A4 report on the Robust letterhead */}
+      {step === "results" && results && (
+        <AssessmentReport basics={basics} bmi={bmi} results={results} />
       )}
     </div>
   );

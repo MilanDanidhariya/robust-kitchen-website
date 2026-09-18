@@ -1,6 +1,12 @@
 'use client';
 
 import { INPUT_RANGES } from '@/utils/constants';
+import {
+  clampToRange,
+  parseWhileTyping,
+  isAcceptableWhileTyping,
+  blockNonNumericKeys,
+} from '@/utils/inputHelpers';
 
 /**
  * WeightInput Component
@@ -86,8 +92,15 @@ export default function WeightInput({ unit, weight, onWeightChange }) {
           min={INPUT_RANGES.WEIGHT_IMPERIAL.min}
           max={INPUT_RANGES.WEIGHT_IMPERIAL.max}
           value={weight.imperial}
+          onKeyDown={blockNonNumericKeys}
           onChange={(e) => {
-            const lb = Math.max(INPUT_RANGES.WEIGHT_IMPERIAL.min, Math.min(INPUT_RANGES.WEIGHT_IMPERIAL.max, parseInt(e.target.value) || 0));
+            // Refuse the keystroke outright if it cannot lead to a valid weight.
+            if (!isAcceptableWhileTyping(e.target.value, INPUT_RANGES.WEIGHT_IMPERIAL)) return;
+            const lb = parseWhileTyping(e.target.value);
+            onWeightChange({ metric: weight.metric, imperial: lb });
+          }}
+          onBlur={(e) => {
+            const lb = clampToRange(e.target.value, INPUT_RANGES.WEIGHT_IMPERIAL);
             onWeightChange({ metric: weight.metric, imperial: lb });
           }}
           className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg font-cormorant text-2xl text-dk bg-gray-50 focus:border-dk focus:bg-white focus:outline-none transition-colors"

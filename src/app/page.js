@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import IntroVideo from '@/components/IntroVideo';
+import MealsServedCounter from '@/components/MealsServedCounter';
 import Footer from '@/components/Footer';
 import LoadingScreen from '@/components/LoadingScreen';
 
@@ -18,6 +19,8 @@ export default function Home() {
           <Navbar />
           <Hero />
           <IntroVideo />
+          {/* Live running total of items served at Kadji care */}
+          <MealsServedCounter />
           {/* Call-to-action section for other pages */}
           <section className="py-20 bg-gradient-to-br from-cream via-white to-cream">
             <div className="max-w-6xl mx-auto px-4 text-center">

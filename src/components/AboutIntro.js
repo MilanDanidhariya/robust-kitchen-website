@@ -1,4 +1,6 @@
+import Link from 'next/link';
 import { Camera } from 'lucide-react';
+import { buildContactHref } from '@/utils/contactSubjects';
 
 export default function AboutIntro() {
   return (
@@ -19,7 +21,8 @@ export default function AboutIntro() {
               A Kitchen Built on One Belief: <em className="text-rust">Food is Medicine.</em>
             </h2>
             <p className="text-text text-lg leading-relaxed mb-4 animate-fade-in-up" style={{ animationDelay: '0.3s', animationFillMode: 'both' }}>
-              Robust Kitchen is not a restaurant. It is a therapeutic nutrition ecosystem — where every meal is clinically designed, every ingredient is clean, and every plate serves a health purpose.
+            Robust Kitchen is not a restaurant. It is a therapeutic nutrition ecosystem — where every meal is clinically designed based on blood reports and every plate serves a health purpose.
+              {/* Robust Kitchen is not a restaurant. It is a therapeutic nutrition ecosystem — where every meal is clinically designed, every ingredient is clean, and every plate serves a health purpose. */}
             </p>
             <p className="text-muted leading-relaxed mb-6 animate-fade-in-up" style={{ animationDelay: '0.4s', animationFillMode: 'both' }}>
               Our in-house team of experienced dieticians and trained chefs work under one roof to create meals that address real health conditions — diabetes, PCOD, gut disorders, thyroid — with food that is preservative-free, fresh, and deeply rooted in Indian culinary tradition.
@@ -28,12 +31,15 @@ export default function AboutIntro() {
               Currently serving at <strong className="text-green">Kadji care</strong>, and expanding across Gujarat through our B2B enterprise kitchen model, B2C app, and clean-label product range.
             </p>
             <div className="flex flex-wrap gap-3 animate-fade-in-up" style={{ animationDelay: '0.6s', animationFillMode: 'both' }}>
-              <a href="#about" className="bg-lime text-dk font-bold text-sm px-6 py-3 rounded-lg hover:bg-lime/90 hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
+              {/* <a href="#about" className="bg-lime text-dk font-bold text-sm px-6 py-3 rounded-lg hover:bg-lime/90 hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
                 Our Story
-              </a>
-              <a href="#join" className="text-green border-2 border-green text-sm px-6 py-3 rounded-lg hover:bg-green hover:text-white hover:scale-105 transition-all duration-300">
+              </a> */}
+              <Link
+                href={buildContactHref('partnership')}
+                className="text-green border-2 border-green text-sm px-48 py-3 rounded-lg hover:bg-green hover:text-white hover:scale-105 transition-all duration-300"
+              >
                 Partner With Us
-              </a>
+              </Link>
             </div>
           </div>
 

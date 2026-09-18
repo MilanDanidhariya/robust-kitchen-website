@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import UnitToggle from '@/components/UnitToggle';
 import GenderSelector from './GenderSelector';
 import AgeSlider from './AgeSlider';
@@ -11,12 +11,28 @@ import ResultPanel from './ResultPanel';
 import CTASection from './CTASection';
 import { DEFAULTS } from '@/utils/constants';
 import { generateCalculationResult } from '@/utils/bmiCalculations';
-import { convertHeightImperialToMetric, convertWeightImperialToMetric } from '@/utils/unitConversions';
+import {
+  convertHeightImperialToMetric,
+  convertWeightImperialToMetric,
+  convertHeightMetricToImperial,
+  convertWeightMetricToImperial,
+} from '@/utils/unitConversions';
 
 /**
  * BMICalculator Component
  * Main calculator component managing all state and logic
  */
+
+/**
+ * Round a converted height to whole feet and inches, rolling 12in up into a foot.
+ * The imperial inputs only accept whole numbers, so 5ft 11.6in has to land on 6ft 0in.
+ */
+function toWholeFeetInches(heightCm) {
+  const { ft, in: inches } = convertHeightMetricToImperial(heightCm);
+  const roundedInches = Math.round(inches);
+
+  return roundedInches >= 12 ? { ft: ft + 1, in: 0 } : { ft, in: roundedInches };
+}
 
 export default function BMICalculator() {
   const [unit, setUnit] = useState(DEFAULTS.unit);
@@ -26,24 +42,49 @@ export default function BMICalculator() {
   const [weight, setWeight] = useState(DEFAULTS.weight);
   const [results, setResults] = useState(null);
   const [showResults, setShowResults] = useState(false);
+  const [error, setError] = useState('');
 
   // Handle unit conversion
   const handleUnitChange = (newUnit) => {
+    if (newUnit === unit) return;
+
+    // Carry the numbers the user actually entered across to the other system,
+    // otherwise switching units silently swaps in whatever the untouched side held.
+    if (newUnit === 'imperial') {
+      setHeight({ metric: height.metric, imperial: toWholeFeetInches(height.metric) });
+      setWeight({
+        metric: weight.metric,
+        imperial: Math.round(convertWeightMetricToImperial(weight.metric)),
+      });
+    } else {
+      setHeight({
+        metric: Math.round(convertHeightImperialToMetric(height.imperial.ft, height.imperial.in)),
+        imperial: height.imperial,
+      });
+      setWeight({
+        metric: Math.round(convertWeightImperialToMetric(weight.imperial)),
+        imperial: weight.imperial,
+      });
+    }
+
     setUnit(newUnit);
     // Reset results when unit changes
     setShowResults(false);
+    setError('');
   };
 
   // Handle height change
   const handleHeightChange = (newHeight) => {
     setHeight(newHeight);
     setShowResults(false);
+    setError('');
   };
 
   // Handle weight change
   const handleWeightChange = (newWeight) => {
     setWeight(newWeight);
     setShowResults(false);
+    setError('');
   };
 
   // Handle calculation
@@ -59,24 +100,36 @@ export default function BMICalculator() {
 
     // Validate inputs
     if (!heightCm || !weightKg || heightCm <= 0 || weightKg <= 0) {
-      alert('Please enter valid measurements');
+      setError('Please enter a valid height and weight before calculating.');
+      setShowResults(false);
       return;
     }
 
     // Generate results
     const calculationResult = generateCalculationResult(heightCm, weightKg);
     if (calculationResult) {
+      setError('');
       setResults(calculationResult);
       setShowResults(true);
     }
   };
 
+  // Keep a ref to the latest handler so the one-time keydown listener below never
+  // calculates from a stale snapshot of height/weight/unit.
+  const calculateRef = useRef(handleCalculate);
+  useEffect(() => {
+    calculateRef.current = handleCalculate;
+  });
+
   // Handle Enter key from any input
   useEffect(() => {
     const handleKeyDown = (e) => {
-      if (e.key === 'Enter') {
-        handleCalculate();
-      }
+      if (e.key !== 'Enter') return;
+      // Buttons and links act on Enter themselves — don't calculate twice.
+      const tagName = e.target?.tagName;
+      if (tagName === 'BUTTON' || tagName === 'A') return;
+
+      calculateRef.current();
     };
 
     document.addEventListener('keydown', handleKeyDown);
@@ -126,6 +179,14 @@ export default function BMICalculator() {
 
           {/* Calculate Button */}
           <CalculateButton onClick={handleCalculate} />
+
+          <div aria-live="polite" role="status">
+            {error && (
+              <p className="mt-3 rounded-lg border border-customSalmon/40 bg-customSalmon/10 px-4 py-3 text-sm text-dk">
+                {error}
+              </p>
+            )}
+          </div>
         </div>
 
         {/* Right Column: Results */}

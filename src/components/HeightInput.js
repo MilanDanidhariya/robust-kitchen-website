@@ -1,6 +1,12 @@
 'use client';
 
 import { INPUT_RANGES } from '@/utils/constants';
+import {
+  clampToRange,
+  parseWhileTyping,
+  isAcceptableWhileTyping,
+  blockNonNumericKeys,
+} from '@/utils/inputHelpers';
 
 /**
  * HeightInput Component
@@ -87,8 +93,15 @@ export default function HeightInput({ unit, height, onHeightChange }) {
             min={INPUT_RANGES.HEIGHT_IMPERIAL_FT.min}
             max={INPUT_RANGES.HEIGHT_IMPERIAL_FT.max}
             value={height.imperial.ft}
+            onKeyDown={blockNonNumericKeys}
             onChange={(e) => {
-              const ft = Math.max(INPUT_RANGES.HEIGHT_IMPERIAL_FT.min, Math.min(INPUT_RANGES.HEIGHT_IMPERIAL_FT.max, parseInt(e.target.value) || 0));
+              // Refuse the keystroke outright if it cannot lead to a valid height.
+              if (!isAcceptableWhileTyping(e.target.value, INPUT_RANGES.HEIGHT_IMPERIAL_FT)) return;
+              const ft = parseWhileTyping(e.target.value);
+              onHeightChange({ metric: height.metric, imperial: { ...height.imperial, ft } });
+            }}
+            onBlur={(e) => {
+              const ft = clampToRange(e.target.value, INPUT_RANGES.HEIGHT_IMPERIAL_FT);
               onHeightChange({ metric: height.metric, imperial: { ...height.imperial, ft } });
             }}
             className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg font-cormorant text-2xl text-dk bg-gray-50 focus:border-dk focus:bg-white focus:outline-none transition-colors"
@@ -103,8 +116,14 @@ export default function HeightInput({ unit, height, onHeightChange }) {
             min={INPUT_RANGES.HEIGHT_IMPERIAL_IN.min}
             max={INPUT_RANGES.HEIGHT_IMPERIAL_IN.max}
             value={height.imperial.in}
+            onKeyDown={blockNonNumericKeys}
             onChange={(e) => {
-              const in_val = Math.max(INPUT_RANGES.HEIGHT_IMPERIAL_IN.min, Math.min(INPUT_RANGES.HEIGHT_IMPERIAL_IN.max, parseInt(e.target.value) || 0));
+              if (!isAcceptableWhileTyping(e.target.value, INPUT_RANGES.HEIGHT_IMPERIAL_IN)) return;
+              const in_val = parseWhileTyping(e.target.value);
+              onHeightChange({ metric: height.metric, imperial: { ...height.imperial, in: in_val } });
+            }}
+            onBlur={(e) => {
+              const in_val = clampToRange(e.target.value, INPUT_RANGES.HEIGHT_IMPERIAL_IN);
               onHeightChange({ metric: height.metric, imperial: { ...height.imperial, in: in_val } });
             }}
             className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg font-cormorant text-2xl text-dk bg-gray-50 focus:border-dk focus:bg-white focus:outline-none transition-colors"

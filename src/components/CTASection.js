@@ -9,11 +9,19 @@ import Link from 'next/link';
 
 export default function CTASection({ showResults }) {
   return (
+    // While hidden this block is faded out but still occupies its slot, so it must
+    // also be taken out of the tab order and the accessibility tree — otherwise
+    // keyboard and screen reader users reach a CTA nobody can see.
     <div
+      inert={!showResults}
+      aria-hidden={!showResults}
       className="bg-dk rounded-2xl p-6 flex items-center justify-between gap-5 mx-11 mb-9 opacity-0 transform translate-y-2 transition-all duration-400"
       style={{
         opacity: showResults ? 1 : 0,
+        visibility: showResults ? 'visible' : 'hidden',
+        pointerEvents: showResults ? 'auto' : 'none',
         transform: showResults ? 'translateY(0)' : 'translateY(8px)',
+        transitionProperty: 'opacity, transform, visibility',
         transitionDelay: showResults ? '0.2s' : '0s',
       }}
     >

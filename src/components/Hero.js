@@ -76,25 +76,28 @@ export default function Hero() {
   return (
     <section id="home" className="bg-hero-ivory py-20 px-0 relative overflow-hidden min-h-screen flex items-center">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_18%,rgba(240,120,108,0.08),transparent_28%),radial-gradient(circle_at_80%_82%,rgba(252,228,84,0.14),transparent_30%)]"></div>
+      {/* Full-width, centred layout — the right-hand media slot is not built yet,
+          so the copy spans the whole container instead of sitting in the left half. */}
       <div className="max-w-6xl mx-auto px-8 md:px-10 relative w-full">
-        <div className="max-w-2xl">
+        <div className="w-full">
           <div className="animate-fade-in-up">
-            <div className="mb-8 flex items-center gap-4">
+            <div className="mb-8 flex items-center justify-center gap-4">
               <span className="h-px w-12 bg-hero-coral"></span>
               <span className="font-jetbrains-mono text-xs uppercase tracking-[0.45em] text-hero-rose">India&apos;s Therapeutic Kitchen</span>
+              <span className="h-px w-12 bg-hero-coral"></span>
             </div>
-            <h1 className="font-cormorant-garamond text-6xl md:text-7xl lg:text-8xl font-bold leading-[0.9] mb-6 text-hero-ink">
+            <h1 className="font-cormorant-garamond text-6xl md:text-7xl lg:text-8xl font-bold leading-[0.95] mb-9 text-hero-ink text-center">
               <span className="text-hero-coral">Unleash</span> the Best<br />
               Within You<br />
-              Through<br />
+              Through{' '}
               {/* <span className="text-gold animate-pulse">Nutrition</span> */}
               Nutrition
             </h1>
-            <div className="h-1.5 w-72 max-w-full bg-hero-yellow mb-7"></div>
-            <p className="text-hero-stone text-xl md:text-2xl leading-relaxed mb-11 max-w-xl">
+            <div className="h-1.5 w-72 max-w-full bg-hero-yellow mb-7 mx-auto"></div>
+            <p className="text-hero-stone text-xl md:text-2xl leading-relaxed mb-11 max-w-3xl mx-auto text-center">
               Robust Kitchen is India&apos;s most personalised therapeutic meal brand — powered by in-house dieticians, run by trained chefs, and built on one promise: food that genuinely heals.
             </p>
-            <div className="flex flex-wrap gap-3 mb-10">
+            <div className="flex flex-wrap justify-center gap-3 mb-10">
               <span className="bg-transparent border border-hero-coral/25 text-hero-coral text-sm px-6 py-3 rounded-full font-semibold tracking-wide">
                 Zero Preservatives
               </span>
@@ -111,7 +114,7 @@ export default function Hero() {
                 Diabetes · PCOD · Gut Health
               </span>
             </div>
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap justify-center gap-4">
               <a href="/contact#join" className="bg-hero-coral text-hero-ink font-bold text-sm px-8 py-4 rounded-lg transition-all hover:bg-hero-coral/90 hover:scale-105 hover:shadow-lg transform">
                 Start My Meal Plan
               </a>

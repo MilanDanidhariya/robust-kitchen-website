@@ -1,34 +1,13 @@
 'use client';
 
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import LoadingScreen from '@/components/LoadingScreen';
+import ContactForm from '@/components/ContactForm';
 
 export default function Contact() {
   const [loadingComplete, setLoadingComplete] = useState(false);
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    subject: '',
-    message: ''
-  });
-
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Handle form submission here
-    console.log('Form submitted:', formData);
-    alert('Thank you for your message! We\'ll get back to you soon.');
-  };
-
   return (
     <div className="min-h-screen">
       <LoadingScreen onComplete={() => setLoadingComplete(true)} />
@@ -53,100 +32,15 @@ export default function Contact() {
             <div className="max-w-6xl mx-auto px-4">
               <div className="grid lg:grid-cols-2 gap-12">
                 {/* Contact Form */}
-                <div>
-                  <h2 className="text-3xl font-cormorant font-bold text-dk mb-8">Send us a Message</h2>
-                  <form onSubmit={handleSubmit} className="space-y-6">
-                    <div className="grid md:grid-cols-2 gap-6">
-                      <div>
-                        <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                          Full Name *
-                        </label>
-                        <input
-                          type="text"
-                          id="name"
-                          name="name"
-                          required
-                          value={formData.name}
-                          onChange={handleChange}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg text-dk placeholder-gray-500 focus:ring-2 focus:ring-lime focus:border-transparent"
-                          placeholder="Your full name"
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                          Email Address *
-                        </label>
-                        <input
-                          type="email"
-                          id="email"
-                          name="email"
-                          required
-                          value={formData.email}
-                          onChange={handleChange}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg text-dk placeholder-gray-500 focus:ring-2 focus:ring-lime focus:border-transparent"
-                          placeholder="your@email.com"
-                        />
-                      </div>
+                <Suspense
+                  fallback={
+                    <div className="rounded-lg border border-gray-200 p-8 text-sm text-gray-500">
+                      Loading form…
                     </div>
-                    <div className="grid md:grid-cols-2 gap-6">
-                      <div>
-                        <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
-                          Phone Number
-                        </label>
-                        <input
-                          type="tel"
-                          id="phone"
-                          name="phone"
-                          value={formData.phone}
-                          onChange={handleChange}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg text-dk placeholder-gray-500 focus:ring-2 focus:ring-lime focus:border-transparent"
-                          placeholder="+91 XXXXX XXXXX"
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">
-                          Subject *
-                        </label>
-                        <select
-                          id="subject"
-                          name="subject"
-                          required
-                          value={formData.subject}
-                          onChange={handleChange}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg text-dk focus:ring-2 focus:ring-lime focus:border-transparent"
-                        >
-                          <option value="">Select a subject</option>
-                          <option value="general">General Inquiry</option>
-                          <option value="nutrition">Nutrition Consultation</option>
-                          <option value="orders">Order Support</option>
-                          <option value="partnership">Partnership</option>
-                          <option value="feedback">Feedback</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div>
-                      <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-                        Message *
-                      </label>
-                      <textarea
-                        id="message"
-                        name="message"
-                        required
-                        rows={6}
-                        value={formData.message}
-                        onChange={handleChange}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg text-dk placeholder-gray-500 focus:ring-2 focus:ring-lime focus:border-transparent"
-                        placeholder="Tell us how we can help you..."
-                      />
-                    </div>
-                    <button
-                      type="submit"
-                      className="w-full bg-lime text-white py-3 px-6 rounded-lg font-semibold hover:bg-lime/90 transition-colors"
-                    >
-                      Send Message
-                    </button>
-                  </form>
-                </div>
+                  }
+                >
+                  <ContactForm />
+                </Suspense>
 
                 {/* Contact Information */}
                 <div>
@@ -187,9 +81,9 @@ export default function Contact() {
                       </div>
                       <div>
                         <h3 className="text-lg font-semibold text-dk mb-1">Address</h3>
-                        <p className="text-gray-600">3rd Floor, Shop No. 370, Emerald One Building</p>
-                        <p className="text-gray-600">371 - 378 - 379, Jetalpur Rd, Anand Nagar, Haripura</p>
-                        <p className="text-gray-600">Vadodara, Gujarat 390020, India</p>
+                        <p className="text-gray-600">9, Vitthal Nagar society, karelibaug,</p>
+                        {/* <p className="text-gray-600">karelibaug,</p> */}
+                        <p className="text-gray-600">Vadodara, Gujarat 390018, India</p>
                       </div>
                     </div>
 

@@ -13,7 +13,10 @@ export default function Navbar() {
     { href: '/', label: 'Home' },
     { href: '/about', label: 'About Us' },
     { href: '/products', label: 'Products' },
-    { href: '/community', label: 'Community' },
+    // Community is hidden from the header for now — the /community route and the
+    // footer link both still work, so this is a one-line change to restore.
+    // { href: '/community', label: 'Community' },
+    { href: '/dietician', label: 'Dietician' },
     { href: '/contact', label: 'Contact' },
   ];
 

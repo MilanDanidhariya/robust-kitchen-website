@@ -44,7 +44,8 @@ export default function WhyExclusive() {
             <Target className="w-12 h-12 mx-auto mb-3 text-lime group-hover:animate-bounce" />
             <h3 className="font-outfit font-bold text-lime mb-2">Built for Your Condition</h3>
             <p className="text-white/70 text-sm leading-relaxed">
-              Diabetes, PCOD, gut health, thyroid — every meal is mapped to your specific health condition, not just calories.
+              Peg feeding, RT FEED, CKD Condition, Diabetes — every meal is mapped to your specific health condition, not just calories.
+              {/* Diabetes, PCOD, gut health, thyroid — every meal is mapped to your specific health condition, not just calories. */}
             </p>
           </div>
 
